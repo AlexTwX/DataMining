@@ -5,6 +5,9 @@
  */
 package lille.iagl.entity;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+
 /**
  *
  * @author francois
@@ -44,5 +47,18 @@ public class Post {
         sb.append(this.stacktrace.toXml());
         sb.append("</Post>");
         return sb.toString();
+    }
+
+    public void toXml(XMLStreamWriter xmlSW) throws XMLStreamException {
+        xmlSW.writeStartElement("Post");
+        xmlSW.writeStartElement("PostId");
+        xmlSW.writeCharacters(this.getPostId());
+        xmlSW.writeEndElement();
+        xmlSW.writeStartElement("Url");
+        xmlSW.writeCharacters(this.getUrl());
+        xmlSW.writeEndElement();
+        this.stacktrace.toXml(xmlSW);
+        xmlSW.writeEndElement();
+
     }
 }

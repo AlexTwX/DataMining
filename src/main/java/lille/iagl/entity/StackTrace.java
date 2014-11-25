@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 /**
  *
@@ -28,11 +30,18 @@ public class StackTrace {
     public void setException(String type, String message) {
         this.exception = new StackTraceException(type, message);
     }
-
+    
+    private String escapeUnusedChar(String text) {
+        return text.replace('<', ' ').replace('>', ' ').replace('\n', ' ').trim();
+    }
     public void setFrame(String frames) {
         Matcher causeMatcher = causesPattern.matcher(frames);
         while (causeMatcher.find()) {
-            this.frames.add(new Frame(causeMatcher.group(1).replace('<', ' ').replace('>', ' ').trim(), causeMatcher.group(2), causeMatcher.group(3).replace('<', ' ').replace('>', ' ').trim()));
+            this.frames.add(
+                new Frame(escapeUnusedChar(causeMatcher.group(1)),
+                    causeMatcher.group(2),
+                    escapeUnusedChar(causeMatcher.group(3)))
+            );
         }
     }
 
@@ -54,6 +63,30 @@ public class StackTrace {
         }
         sb.append("</Stack>");
         return sb.toString();
+    }
+
+    void toXml(XMLStreamWriter xmlSW) throws XMLStreamException {
+        xmlSW.writeStartElement("Stack");
+        xmlSW.writeStartElement("Type");
+        xmlSW.writeCharacters(this.exception.getType().trim());
+        xmlSW.writeEndElement();
+        xmlSW.writeStartElement("Message");
+        xmlSW.writeCharacters(this.exception.getMessage().trim());
+        xmlSW.writeEndElement();
+        for (Frame frame : this.frames) {
+            xmlSW.writeStartElement("Frame");
+            xmlSW.writeStartElement("File");
+            xmlSW.writeCharacters(frame.getFile().trim());
+            xmlSW.writeEndElement();
+            xmlSW.writeStartElement("Line");
+            xmlSW.writeCharacters(frame.getLine().trim());
+            xmlSW.writeEndElement();
+            xmlSW.writeStartElement("Method");
+            xmlSW.writeCharacters(frame.getMethod().trim());
+            xmlSW.writeEndElement();
+            xmlSW.writeEndElement();
+        }
+        xmlSW.writeEndElement();
     }
     
     
