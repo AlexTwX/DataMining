@@ -7,27 +7,61 @@ package lille.iagl.entity;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author francois
  */
 public class StackTrace {
-    private List<Frame> frame;
-    private Exception exception;
+    private static final String causes = "File\\s+\"([^\"]+)\",\\s+line\\s+(\\d+),\\s+in\\s+([^\\n]+)\\n";
+    private static Pattern causesPattern = Pattern.compile(causes);
 
-    public StackTrace(String type, String message, List frame) {
-        this.exception = new Exception(type, message);
-        this.frame = new LinkedList<Frame>();
-        while (frame.size() < 0) {
-            this.frame.add(new Frame(toto.type, toto.line, toto.message));
+    private List<Frame> frames;
+    private StackTraceException exception;
+
+    public StackTrace() {
+        this.frames = new LinkedList<>();
+    }
+
+    public void setException(String type, String message) {
+        this.exception = new StackTraceException(type, message);
+    }
+
+    public void setFrame(String frames) {
+        Matcher causeMatcher = causesPattern.matcher(frames);
+        while (causeMatcher.find()) {
+            this.frames.add(new Frame(causeMatcher.group(1).replace('<', ' ').replace('>', ' ').trim(), causeMatcher.group(2), causeMatcher.group(3).replace('<', ' ').replace('>', ' ').trim()));
         }
     }
-    private class Exception {
+
+    public List<Frame> getFrames() {
+        return frames;
+    }
+    
+    public String toXml() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<Stack>");
+        sb.append("<Type>"+this.exception.getType().trim()+"</Type>");
+        sb.append("<Message>"+this.exception.getMessage().trim()+"</Message>");
+        for (Frame frame : this.frames) {
+            sb.append("<Frame>");
+            sb.append("<File>"+frame.getFile()+"</File>");
+            sb.append("<Line>"+frame.getLine()+"</Line>");
+            sb.append("<Method>"+frame.getMethod()+"</Method>");
+            sb.append("</Frame>");
+        }
+        sb.append("</Stack>");
+        return sb.toString();
+    }
+    
+    
+    public class StackTraceException {
         private String type;
         private String message;
         
-        public Exception(String type, String exception) {
+        public StackTraceException(String type, String message) {
             this.type = type;
             this.message = message;
         }

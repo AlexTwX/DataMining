@@ -22,20 +22,27 @@ public class Post {
     }
     public void setPostId(String postId) {
         this.postId = postId;
+        this.url = "http://stackoverflow.com/questions/" + postId;
     }
     public void setStacktrace(StackTrace stacktrace) {
         this.stacktrace = stacktrace;
     }
-    public void setUrl(String url) {
-        this.url = url;
-    }
+
     public String getPostId() {
         return postId;
     }
-    public StackTrace getStacktrace() {
-        return stacktrace;
-    }
+
     public String getUrl() {
         return url;
+    }
+    
+    public String toXml() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<Post>");
+        sb.append("<PostId>"+this.getPostId()+"</PostId>");
+        sb.append("<url>"+this.getUrl()+"</url>");
+        sb.append(this.stacktrace.toXml());
+        sb.append("</Post>");
+        return sb.toString();
     }
 }
