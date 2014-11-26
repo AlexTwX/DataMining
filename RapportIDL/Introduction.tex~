@@ -1,0 +1,5 @@
+\section{Introduction}
+\paragraph{}
+Le développement de logiciel se répendant de plus en plus, il est nécessaire à la communauté des développeurs de pouvoir s'entraider. C'est dans ce but que de nombreux sites proposent leurs services afin de permettrent à ces derniers de pouvoir partager leurs connaissances. Il existe également des sites spécialement conçus afin de pouvoir exposer les problèmes rencontrés lors d'un développement comme par exemple stackoverflow.com. C'est sur ce site que nous allons réalisés des statistiques concernant les pratiques des utilisateurs concernant la présence des stack traces.
+
+Afin d'aider les développeurs à résoudre certains bugs, certains langages proposent d'afficher une stack trace (ou trace d'appels en français). Une stack trace est un affichage de la pile d'éxécution à un instant précis de l'éxecution d'un programme. Bien que pouvant être affichés à n'importe quel moment par le dévelopeur, cette dernière est le plus souvent utilisé lors de la phase de débuggage. 

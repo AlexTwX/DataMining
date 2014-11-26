@@ -1,0 +1,4 @@
+\clearpage
+\section{Conclusion}
+Suite à nos résultats nous pouvons conclure que beaucoup de developpeurs même dans des projets trés utilisés comme JUnit ne prennent pas le soin de s'assurer que chaque exception lévé est bien capturé et traité cas par cas.
+Cet outil pourrait donc être utile aux personnes en fin de projet afin de s'arruré de la stabilité de celui-ci.

@@ -1,0 +1,21 @@
+ [*]   % de posts contenant des traces
+ [*]   % de posts résolus contenant des traces 
+ [*]   % de posts résolus ne contenant pas de traces
+ []   % de posts de départ contenant une stack trace
+ []   % de  posts suivants contenant une stack trace
+ [*]   top des traces ayant le plus de vue
+ [*]   top des traces ayant le plus de posts
+    
+
+    g1) Utilisation des traces
+   a) Posts contenant des traces
+   b) 
+
+2) 
+   b) Posts résolus contenant une trace
+   c) Posts résolus ne contenant pas une trace
+
+
+2) Chiffres sur les traces
+   a) top des traces contenant le plus de vue
+   b) top des traces ayant le plus de posts

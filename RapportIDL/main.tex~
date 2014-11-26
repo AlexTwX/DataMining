@@ -1,0 +1,56 @@
+% Préambule du document :
+%
+% 
+
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{marvosym}
+\usepackage{float}
+\usepackage[utf8]{inputenc} %% to enable non ASCII characters
+\usepackage[top=2cm, bottom=2cm, left=3cm, right=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\parskip=5pt
+\graphicspath{{pictures/}}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\title{\vspace{\fill}Analyse de la présence des stack trace sur Stackoverflow.com \vspace{\fill}}
+
+\author{
+  Grégory LEFER\\
+  gregory.lefer@etudiant.univ-lille1.fr\\
+  Lille 1
+\and
+  Alexandre FRANCOIS\\
+  alexandre1.francois@etudiant.univ-lille1.fr\\
+  Lille 1
+}
+
+\begin{document}
+\maketitle
+
+\clearpage
+\renewcommand{\contentsname}{Sommaire}
+\tableofcontents
+
+\clearpage
+
+\input{Introduction}
+\input{Conclusion}
+
+\clearpage
+\listoffigures 
+
+%% \clearpage
+%% \bibliography{references}{}
+%% \bibliographystyle{plain}
+
+\end{document}

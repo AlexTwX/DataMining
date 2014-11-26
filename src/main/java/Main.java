@@ -1,5 +1,6 @@
 
 import lille.iagl.python_bucket.PythonBucketter;
+import lille.iagl.stackoverflowparser.StackoverflowParser;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,8 +16,9 @@ public class Main {
     public static String DatasetFile = "Python_dataset.xml";
     
     public static void main(String[] args) {
-        //StackoverflowParser parser = 
-        //       new StackoverflowParser(StackoverflowFile, DatasetFile);
+        
+         StackoverflowParser parser = 
+               new StackoverflowParser(StackoverflowFile, DatasetFile);
         
         PythonBucketter pb = new PythonBucketter(DatasetFile);
     }
