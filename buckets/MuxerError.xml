@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><Posts><Post><PostId>7228248</PostId><Url>http://stackoverflow.com/questions/7228248</Url><Stack><Type>MuxerError</Type><Message>The header has not been read yet. Cannot get stream information.</Message><Frame><File>C:/Users/tryer.py</File><Line>7</Line><Method>module</Method></Frame></Stack></Post></Posts>

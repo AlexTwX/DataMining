@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><Posts><Post><PostId>5271339</PostId><Url>http://stackoverflow.com/questions/5271339</Url><Stack><Type>EntParEx</Type><Message>'unknown datatype other'</Message><Frame><File>pyshell#13</File><Line>1</Line><Method>module</Method></Frame><Frame><File>pyshell#8</File><Line>3</Line><Method>__missing__</Method></Frame></Stack></Post></Posts>

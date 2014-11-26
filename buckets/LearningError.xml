@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><Posts><Post><PostId>14700236</PostId><Url>http://stackoverflow.com/questions/14700236</Url><Stack><Type>LearningError</Type><Message>We don't take 4s!</Message><Frame><File>test.py</File><Line>34</Line><Method>test_raise</Method></Frame><Frame><File>test.py</File><Line>12</Line><Method>addition_no_four</Method></Frame></Stack></Post></Posts>

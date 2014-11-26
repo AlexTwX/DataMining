@@ -11,13 +11,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import lille.iagl.xmlcreator.XMLCreator;
+import lille.iagl.xmlCreator.XMLCreator;
 
 /**
  *
  * @author francois
  */
 public class StackTrace {
+
     private static final String causes = "File\\s+\"([^\"]+)\",\\s+line\\s+(\\d+),\\s+in\\s+([^\\n]+)\\n";
     private static Pattern causesPattern = Pattern.compile(causes);
 
@@ -26,22 +27,36 @@ public class StackTrace {
 
     public StackTrace() {
         this.frames = new LinkedList<>();
+        this.exception = new StackTraceException();
     }
 
     public void setException(String type, String message) {
         this.exception = new StackTraceException(type, message);
     }
-    
+
+    public void setType(String t) {
+        this.exception.setType(t);
+    }
+
+    public void setMessage(String m) {
+        this.exception.setMessage(m);
+    }
+
+    public String getType() {
+        return this.exception.getType();
+    }
+
     private String escapeUnusedChar(String text) {
         return text.replace('<', ' ').replace('>', ' ').replace('\n', ' ').trim();
     }
+
     public void setFrame(String frames) {
         Matcher causeMatcher = causesPattern.matcher(frames);
         while (causeMatcher.find()) {
             this.frames.add(
-                new Frame(escapeUnusedChar(causeMatcher.group(1)),
-                    causeMatcher.group(2),
-                    escapeUnusedChar(causeMatcher.group(3)))
+                    new Frame(escapeUnusedChar(causeMatcher.group(1)),
+                            causeMatcher.group(2),
+                            escapeUnusedChar(causeMatcher.group(3)))
             );
         }
     }
@@ -49,24 +64,24 @@ public class StackTrace {
     public List<Frame> getFrames() {
         return frames;
     }
-    
+
     public String toXml() {
         StringBuilder sb = new StringBuilder();
         sb.append("<Stack>");
-        sb.append("<Type>"+this.exception.getType().trim()+"</Type>");
-        sb.append("<Message>"+this.exception.getMessage().trim()+"</Message>");
+        sb.append("<Type>" + this.exception.getType().trim() + "</Type>");
+        sb.append("<Message>" + this.exception.getMessage().trim() + "</Message>");
         for (Frame frame : this.frames) {
             sb.append("<Frame>");
-            sb.append("<File>"+frame.getFile()+"</File>");
-            sb.append("<Line>"+frame.getLine()+"</Line>");
-            sb.append("<Method>"+frame.getMethod()+"</Method>");
+            sb.append("<File>" + frame.getFile() + "</File>");
+            sb.append("<Line>" + frame.getLine() + "</Line>");
+            sb.append("<Method>" + frame.getMethod() + "</Method>");
             sb.append("</Frame>");
         }
         sb.append("</Stack>");
         return sb.toString();
     }
 
-    public void toXml(XMLStreamWriter xmlSW) throws XMLStreamException {
+    void toXml(XMLStreamWriter xmlSW) throws XMLStreamException {
         xmlSW.writeStartElement("Stack");
         xmlSW.writeStartElement("Type");
         xmlSW.writeCharacters(this.exception.getType().trim());
@@ -89,7 +104,7 @@ public class StackTrace {
         }
         xmlSW.writeEndElement();
     }
-    
+
     public void toXml(XMLCreator writer) {
         writer.startElement("Stack");
         writer.createElement("Type", this.exception.getType().trim());
@@ -103,40 +118,9 @@ public class StackTrace {
         }
         writer.endElement();
     }
-    
-    public class StackTraceException {
-        private String type;
-        private String message;
-        
-        public StackTraceException(String type, String message) {
-            this.type = type;
-            this.message = message;
-        }
-        public String getType() {
-            return type;
-        }
-        public String getMessage() {
-            return message;
-        }
+
+    public void addFrame(lille.iagl.entity.Frame _frame) {
+        this.frames.add(_frame);
     }
-    private class Frame {
-        private String file;
-        private String line;
-        private String method;
-        
-        public Frame(String file, String line, String method) {
-            this.line = line;
-            this.file = file;
-            this.method = method;
-        }
-        public String getFile() {
-            return file;
-        }
-        public String getLine() {
-            return line;
-        }
-        public String getMethod() {
-            return method;
-        }
-    }
+
 }

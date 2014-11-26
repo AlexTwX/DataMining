@@ -1,5 +1,5 @@
 
-import lille.iagl.stackoverflowparser.StackoverflowParser;
+import lille.iagl.python_bucket.PythonBucketter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,12 +9,15 @@ import lille.iagl.stackoverflowparser.StackoverflowParser;
 /**
  *
  * @author francois
- */
+ */ 
 public class Main {
-    public static String stackoverflowFile = "/gfs/francois/Posts.xml";
-    public static String datasetFile = "dataset.xml";
+    public static String StackoverflowFile = "/gfs/lefer/stackexchange/Posts.xml";
+    public static String DatasetFile = "Python_dataset.xml";
     
     public static void main(String[] args) {
-        StackoverflowParser parser = new StackoverflowParser(stackoverflowFile, datasetFile);
+        //StackoverflowParser parser = 
+        //       new StackoverflowParser(StackoverflowFile, DatasetFile);
+        
+        PythonBucketter pb = new PythonBucketter(DatasetFile);
     }
 }

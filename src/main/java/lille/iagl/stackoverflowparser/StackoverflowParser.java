@@ -7,7 +7,6 @@ package lille.iagl.stackoverflowparser;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,7 +20,7 @@ import javax.xml.stream.events.XMLEvent;
 import lille.iagl.entity.Post;
 import lille.iagl.entity.StackTrace;
 import lille.iagl.pythonstacktracerecognizer.PythonStackTraceRecognizer;
-import lille.iagl.xmlcreator.XMLCreator;
+import lille.iagl.xmlCreator.XMLCreator;
 
 /**
  *
@@ -65,6 +64,7 @@ public class StackoverflowParser {
                     break;
             }
         }
+        this.writer.endElement();
     }
     private void checkElement(XMLEvent event) {
         Attribute body, tags, acceptedAnswer, idpost;
@@ -81,7 +81,7 @@ public class StackoverflowParser {
             List<StackTrace> stacktraces = this.recognizer.getStackTrace(body.getValue());
             this._post.setStacktrace(stacktraces);
             if (!stacktraces.isEmpty()) {
-                this._post.toXml(this.writer);
+                this._post.toXml(writer);
             }
         }
     }

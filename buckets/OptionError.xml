@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><Posts><Post><PostId>18644474</PostId><Url>http://stackoverflow.com/questions/18644474</Url><Stack><Type>OptionError</Type><Message>option -w/--write: invalid action: 'write_mem''</Message><Frame><File>C:\Users\Documents\devices_15_JUL_2013\RSimulator.py</File><Line>73</Line><Method>getparams</Method></Frame></Stack></Post></Posts>

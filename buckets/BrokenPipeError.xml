@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><Posts><Post><PostId>20977909</PostId><Url>http://stackoverflow.com/questions/20977909</Url><Stack><Type>BrokenPipeError</Type><Message>[Errno 32] Broken pipe</Message><Frame><File>./client.py</File><Line>10</Line><Method>module</Method></Frame></Stack></Post></Posts>
