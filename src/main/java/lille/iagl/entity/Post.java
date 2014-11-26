@@ -5,6 +5,7 @@
  */
 package lille.iagl.entity;
 
+import java.util.List;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
@@ -15,20 +16,20 @@ import javax.xml.stream.XMLStreamWriter;
 public class Post {
     private String postId;
     private String url;
-    private StackTrace stacktrace;
+    private List<StackTrace> stacktraces;
     
     public Post() {
-        this.stacktrace = null;
+        this.stacktraces = null;
     }
     public Boolean hasStackTrace() {
-        return this.stacktrace != null;
+        return this.stacktraces != null;
     }
     public void setPostId(String postId) {
         this.postId = postId;
         this.url = "http://stackoverflow.com/questions/" + postId;
     }
-    public void setStacktrace(StackTrace stacktrace) {
-        this.stacktrace = stacktrace;
+    public void setStacktrace(List<StackTrace> stacktrace) {
+        this.stacktraces = stacktrace;
     }
 
     public String getPostId() {
@@ -44,7 +45,9 @@ public class Post {
         sb.append("<Post>");
         sb.append("<PostId>"+this.getPostId()+"</PostId>");
         sb.append("<url>"+this.getUrl()+"</url>");
-        sb.append(this.stacktrace.toXml());
+        for (StackTrace st : this.stacktraces) {
+            sb.append(st.toXml());
+        }
         sb.append("</Post>");
         return sb.toString();
     }
@@ -57,8 +60,9 @@ public class Post {
         xmlSW.writeStartElement("Url");
         xmlSW.writeCharacters(this.getUrl());
         xmlSW.writeEndElement();
-        this.stacktrace.toXml(xmlSW);
+        for (StackTrace st : this.stacktraces) {
+            st.toXml(xmlSW);
+        }
         xmlSW.writeEndElement();
-
     }
 }
