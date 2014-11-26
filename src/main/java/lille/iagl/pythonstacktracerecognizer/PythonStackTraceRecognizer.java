@@ -5,29 +5,11 @@
  */
 package lille.iagl.pythonstacktracerecognizer;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.XMLEvent;
-import lille.iagl.entity.Post;
 import lille.iagl.entity.StackTrace;
-import lille.iagl.entity.StackTrace.StackTraceException;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**

@@ -11,11 +11,10 @@ import lille.iagl.stackoverflowparser.StackoverflowParser;
  * @author francois
  */
 public class Main {
-    public static String StackoverflowFile = "Posts.xml";
-    public static String DatasetFile = "Python_dataset.xml";
+    public static String stackoverflowFile = "/gfs/francois/Posts.xml";
+    public static String datasetFile = "dataset.xml";
     
     public static void main(String[] args) {
-        StackoverflowParser parser = 
-               new StackoverflowParser(StackoverflowFile, DatasetFile);
+        StackoverflowParser parser = new StackoverflowParser(stackoverflowFile, datasetFile);
     }
 }

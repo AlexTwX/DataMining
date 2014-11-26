@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import lille.iagl.xmlcreator.XMLCreator;
 
 /**
  *
@@ -65,7 +66,7 @@ public class StackTrace {
         return sb.toString();
     }
 
-    void toXml(XMLStreamWriter xmlSW) throws XMLStreamException {
+    public void toXml(XMLStreamWriter xmlSW) throws XMLStreamException {
         xmlSW.writeStartElement("Stack");
         xmlSW.writeStartElement("Type");
         xmlSW.writeCharacters(this.exception.getType().trim());
@@ -89,6 +90,19 @@ public class StackTrace {
         xmlSW.writeEndElement();
     }
     
+    public void toXml(XMLCreator writer) {
+        writer.startElement("Stack");
+        writer.createElement("Type", this.exception.getType().trim());
+        writer.createElement("Message", this.exception.getMessage().trim());
+        for (Frame frame : this.frames) {
+            writer.startElement("Frame");
+            writer.createElement("File", frame.getFile().trim());
+            writer.createElement("Line", frame.getLine().trim());
+            writer.createElement("Method", frame.getMethod().trim());
+            writer.endElement();
+        }
+        writer.endElement();
+    }
     
     public class StackTraceException {
         private String type;

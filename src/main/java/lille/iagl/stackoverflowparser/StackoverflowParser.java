@@ -21,7 +21,7 @@ import javax.xml.stream.events.XMLEvent;
 import lille.iagl.entity.Post;
 import lille.iagl.entity.StackTrace;
 import lille.iagl.pythonstacktracerecognizer.PythonStackTraceRecognizer;
-import lille.iagl.xmlCreator.XMLCreator;
+import lille.iagl.xmlcreator.XMLCreator;
 
 /**
  *
@@ -80,6 +80,9 @@ public class StackoverflowParser {
         if (body != null) {
             List<StackTrace> stacktraces = this.recognizer.getStackTrace(body.getValue());
             this._post.setStacktrace(stacktraces);
+            if (!stacktraces.isEmpty()) {
+                this._post.toXml(this.writer);
+            }
         }
     }
 }
