@@ -16,8 +16,7 @@ public class Main {
     public static String DatasetFile = "Python_dataset.xml";
     
     public static void main(String[] args) {
-        
-         StackoverflowParser parser = 
+        StackoverflowParser parser = 
                new StackoverflowParser(StackoverflowFile, DatasetFile);
         
         PythonBucketter pb = new PythonBucketter(DatasetFile);
