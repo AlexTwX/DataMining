@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import lille.iagl.xmlCreator.XMLCreator;
+import lille.iagl.xmlcreator.XMLCreator;
 
 /**
  *

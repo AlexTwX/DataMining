@@ -1,4 +1,7 @@
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.stream.XMLStreamException;
 import lille.iagl.python_bucket.PythonBucketter;
 import lille.iagl.stackoverflowparser.StackoverflowParser;
 
@@ -12,13 +15,20 @@ import lille.iagl.stackoverflowparser.StackoverflowParser;
  * @author francois
  */ 
 public class Main {
-    public static String StackoverflowFile = "/gfs/lefer/stackexchange/Posts.xml";
-    public static String DatasetFile = "Python_dataset.xml";
+    public static String StackoverflowFile = "L:\\Posts.xml";
+    public static String DatasetFile = "PythonDataset.xml";
+    public static String QuestionDataset = "QuestionDataset.xml";
     
     public static void main(String[] args) {
-        StackoverflowParser parser = 
-               new StackoverflowParser(StackoverflowFile, DatasetFile);
-        
-        PythonBucketter pb = new PythonBucketter(DatasetFile);
+        StackoverflowParser parser = new StackoverflowParser(StackoverflowFile);
+
+        //Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+        try {
+            //parser.createPythonDataSet(DatasetFile);
+            parser.createQuestionDataset(QuestionDataset);
+        } catch (XMLStreamException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //PythonBucketter pb = new PythonBucketter(DatasetFile);
     }
 }

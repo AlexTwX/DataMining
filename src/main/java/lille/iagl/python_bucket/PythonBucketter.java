@@ -8,7 +8,6 @@ package lille.iagl.python_bucket;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,15 +19,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 import javax.xml.stream.events.XMLEvent;
 import lille.iagl.entity.Post;
 import lille.iagl.entity.StackTrace;
 import lille.iagl.entity.Frame;
 import lille.iagl.pythonstacktracerecognizer.PythonStackTraceRecognizer;
-import lille.iagl.xmlCreator.XMLCreator;
+import lille.iagl.xmlcreator.XMLCreator;
 
 /**
  *

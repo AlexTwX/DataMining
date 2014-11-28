@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import lille.iagl.xmlCreator.XMLCreator;
+import lille.iagl.xmlcreator.XMLCreator;
 
 /**
  *
