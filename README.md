@@ -41,14 +41,23 @@ QuestionWithoutStacktraceDataset
 Sommaire du rapport
 -------------------
 Introduction
+
 Developpement
+
     Reconnaissance de stacktrace python
+    
         regex
+        
     Stackoverflow datadump
+    
         readme de posts.xml
+        
     Parser crash dataset
+    
         algo pseudo code
+        
     Parser question avec crash
+    
         algo pseudo code
     Parser question sans crash
         algo pseudo code
