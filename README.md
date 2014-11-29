@@ -59,19 +59,36 @@ Developpement
     Parser question avec crash
     
         algo pseudo code
+        
     Parser question sans crash
+    
         algo pseudo code
+        
 Exploitation des datasets
+
     Bucket & Xbase & Xpath
+    
     CrashDataset
+    
         Creation des buckets
+        
             algo pseudo code
+            
     Question avec crash
+    
         Requete xpath
+        
     Question sans crash
+    
         Requete xpath
+        
 Interpretation des resultats
+
     Stat CrashDataset
+    
     Stat Question avec crash
+    
     Stat Question sans crash
+    
 Conclusion
+
