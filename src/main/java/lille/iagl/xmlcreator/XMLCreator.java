@@ -24,8 +24,9 @@ public class XMLCreator {
         try {
             XMLOutputFactory xmlOF = XMLOutputFactory.newFactory();
             FileOutputStream outputStream = new FileOutputStream(filename);
-            this.writer = xmlOF.createXMLStreamWriter(outputStream);
-        } catch (FileNotFoundException | XMLStreamException ex) {
+            this.writer = xmlOF.createXMLStreamWriter(outputStream, "UTF-8");
+            this.writer.writeStartDocument("UTF-8", "1.0");
+        } catch (FileNotFoundException | XMLStreamException ex) { 
             Logger.getLogger(XMLCreator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

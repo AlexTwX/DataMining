@@ -82,7 +82,7 @@ public class StackTrace {
     }
 
     void toXml(XMLStreamWriter xmlSW) throws XMLStreamException {
-        xmlSW.writeStartElement("Stack");
+        xmlSW.writeStartElement("Stacktraces");
         xmlSW.writeStartElement("Type");
         xmlSW.writeCharacters(this.exception.getType().trim());
         xmlSW.writeEndElement();

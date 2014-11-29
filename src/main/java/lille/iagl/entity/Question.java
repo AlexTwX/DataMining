@@ -18,17 +18,17 @@ import org.apache.commons.lang.StringEscapeUtils;
 public class Question {
     private String id = null;
     private String url = null;
-    private String body = null;
+//    private String body = null;
     private String acceptedAnswerId = null;
     private List<StackTrace> stacktraces = null;
     private Reponse acceptedAnswer = null;
     private List<Reponse> reponses = null;
     
-    public Question(String id, String acceptedAnswerId, String body, List<StackTrace> stacktraces) {
+    public Question(String id, String acceptedAnswerId, List<StackTrace> stacktraces) {
         this.id = id;
         this.url = "http://stackoverflow.com/questions/" + id;
         this.acceptedAnswerId = acceptedAnswerId;
-        this.body = StringEscapeUtils.unescapeHtml(body);
+//        this.body = StringEscapeUtils.unescapeHtml(body);
         this.stacktraces = stacktraces;
         this.reponses = new LinkedList<Reponse>();
     }
@@ -49,10 +49,14 @@ public class Question {
         writer.startElement("Question");
         writer.createElement("Id", this.id);
         writer.createElement("Url", this.url);
-        for (StackTrace stacktrace : this.stacktraces) {
-            stacktrace.toXml(writer);
+        if (stacktraces != null && !stacktraces.isEmpty()) {
+            writer.startElement("Stacktraces");
+            for (StackTrace stacktrace : this.stacktraces) {
+                stacktrace.toXml(writer);
+            }
+            writer.endElement();
         }
-        writer.createElement("Body", this.body);
+//        writer.createElement("Body", this.body);
         if (this.acceptedAnswer != null) {
             writer.startElement("AcceptedAnswer");
             this.acceptedAnswer.toXml(writer);
@@ -62,7 +66,7 @@ public class Question {
         }
         writer.startElement("Reponses");
         for (Reponse reponse : this.reponses) {
-            writer.startElement("Reponses");
+            writer.startElement("Reponse");
             reponse.toXml(writer);
             writer.endElement();
         }

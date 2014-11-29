@@ -16,8 +16,9 @@ import lille.iagl.stackoverflowparser.StackoverflowParser;
  */ 
 public class Main {
     public static String StackoverflowFile = "L:\\Posts.xml";
-    public static String DatasetFile = "PythonDataset.xml";
-    public static String QuestionDataset = "QuestionDataset.xml";
+    public static String StacktrackDataset = "StacktrackDataset.xml";
+    public static String QuestionStacktrackDataset = "QuestionStacktrackDataset.xml";
+    public static String QuestionWithoutStacktracDataset = "QuestionWithoutStacktrackDataset.xml";
     
     public static void main(String[] args) {
         StackoverflowParser parser = new StackoverflowParser(StackoverflowFile);
@@ -25,7 +26,8 @@ public class Main {
         //Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         try {
             //parser.createPythonDataSet(DatasetFile);
-            parser.createQuestionDataset(QuestionDataset);
+            //parser.createQuestionStacktraceDataset(QuestionStacktrackDataset);
+            parser.createQuestionWithoutStacktraceDataset(QuestionWithoutStacktracDataset);
         } catch (XMLStreamException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
