@@ -8,9 +8,12 @@ package lille.iagl.stackoverflowparser;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.Iterator;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
@@ -130,6 +133,7 @@ public class StackoverflowParser {
         QName q_parentId = new QName("ParentId");
         QName q_postType = new QName("PostTypeId");
         QName q_acceptedAnswer = new QName("AcceptedAnswerId");
+        QName q_lastActivity = new QName("LastActivityDate");
         StartElement element = event.asStartElement();
         
         if (!element.getName().toString().equals("row")) {
@@ -145,8 +149,9 @@ public class StackoverflowParser {
             if (body != null) {
                 List<StackTrace> stacktraces = this.recognizer.getStackTrace(body.getValue());
                 if (!stacktraces.isEmpty()) {
-                    Question question = new Question(idPost.getValue(), 
-                            (acceptedAnswer == null?null:acceptedAnswer.getValue()), stacktraces);
+                    Question question = new Question(idPost.getValue(),
+                            (acceptedAnswer == null?null:acceptedAnswer.getValue()),
+                            "0", stacktraces);
                     questions.add(0, question);
                 }
             }
@@ -170,10 +175,15 @@ public class StackoverflowParser {
     public void createQuestionWithoutStacktraceDataset(String writer) throws XMLStreamException {
         int eventType;
         XMLEvent event;
-        List<Question> questions = new LinkedList<Question>();
-
+//        List<Question> questions = new LinkedList<Question>();
+        Map<String, Question> questions = new HashMap<String, Question>();
+        
         System.out.println("Creation d'un dataset contenant des questions python sans stacktrace");
         System.out.println("Debut de la lecture du fichier");
+                System.out.println("Fin de la lecture du fichier");
+        System.out.println("Debut de l'écriture du fichier");
+        this.writer = new XMLCreator(writer);
+        this.writer.startElement("Posts");
         while (this.reader.hasNext()) {
             this._post = new Post();
             event = this.reader.nextEvent();
@@ -186,20 +196,17 @@ public class StackoverflowParser {
                     break;
             }
         }
-        System.out.println("Fin de la lecture du fichier");
-        System.out.println("Debut de l'écriture du fichier");
-        this.writer = new XMLCreator(writer);
-        this.writer.startElement("Posts");
-        for (Question question : questions) {
-            question.toXml(this.writer);
+        Set<String> keys = questions.keySet();
+        for (String key : keys) {
+            questions.get(key).toXml(this.writer);
         }
         this.writer.endElement();
         this.writer.close();
         System.out.println("Fin de l'écriture du fichier");
     }
 
-    private void getQuestionWithoutStacktrace(XMLEvent event, List<Question> questions) {
-        Attribute body, idPost, acceptedAnswer, typePost, score, parentId, tags;
+    private void getQuestionWithoutStacktrace(XMLEvent event, Map<String,Question> questions) {//List<Question> questions) {
+        Attribute body, idPost, acceptedAnswer, typePost, score, parentId, tags, answerCount;
         QName q_body = new QName("Body");
         QName q_idPost = new QName("Id");
         QName q_score = new QName("Score");
@@ -207,8 +214,8 @@ public class StackoverflowParser {
         QName q_postType = new QName("PostTypeId");
         QName q_acceptedAnswer = new QName("AcceptedAnswerId");
         QName q_tags = new QName("Tags");
+        QName q_answerCount = new QName("AnswerCount");
         StartElement element = event.asStartElement();
-        
         if (!element.getName().toString().equals("row")) {
             return;
         }
@@ -219,28 +226,26 @@ public class StackoverflowParser {
         parentId = element.getAttributeByName(q_parentId);
         acceptedAnswer = element.getAttributeByName(q_acceptedAnswer);
         tags = element.getAttributeByName(q_tags);
+        answerCount = element.getAttributeByName(q_answerCount);
+
         if (typePost.getValue().equals("1")) { //Question
             if (body != null && tags.getValue().contains("python")) {
                 List<StackTrace> stacktraces = this.recognizer.getStackTrace(body.getValue());
                 if (stacktraces.isEmpty()) {
-                    Question question = new Question(idPost.getValue(), 
-                            (acceptedAnswer == null?null:acceptedAnswer.getValue()), stacktraces);
-                    questions.add(0, question);
+                    Question question = new Question(idPost.getValue(),
+                            (acceptedAnswer == null?null:acceptedAnswer.getValue()),
+                            answerCount.getValue(), stacktraces);
+                    questions.put(idPost.getValue(), question);
                 }
             }
         } else if (typePost.getValue().equals("2")) { //Response
-            for (Question tmp : questions) {
-                if (tmp.getId().equals(parentId.getValue())) {
-                    Reponse reponse = new Reponse(score.getValue(), this.recognizer.getStackTrace(body.getValue()));
-                    if (tmp.getAcceptedAnswerId() != null && tmp.getAcceptedAnswerId().equals(idPost.getValue())) {
-                        tmp.setAcceptedAnswer(reponse);
-                    } else {
-                        tmp.addReponse(reponse);
-                    }
-                    break;
-                }
-                if (Integer.valueOf(parentId.getValue()) > Integer.valueOf(tmp.getId())) {
-                    break;
+            Question tmp = questions.get(parentId.getValue());
+            if (tmp != null) {
+                Reponse reponse = new Reponse(score.getValue(), this.recognizer.getStackTrace(body.getValue()));
+                if (tmp.getAcceptedAnswerId() != null && tmp.getAcceptedAnswerId().equals(idPost.getValue())) {
+                    tmp.setAcceptedAnswer(reponse);
+                } else {
+                   tmp.addReponse(reponse); 
                 }
             }
         }

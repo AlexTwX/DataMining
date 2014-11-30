@@ -6,6 +6,8 @@
 
 package lille.iagl.entity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import lille.iagl.xmlcreator.XMLCreator;
@@ -20,19 +22,26 @@ public class Question {
     private String url = null;
 //    private String body = null;
     private String acceptedAnswerId = null;
+    private Integer answerCount;
     private List<StackTrace> stacktraces = null;
     private Reponse acceptedAnswer = null;
     private List<Reponse> reponses = null;
     
-    public Question(String id, String acceptedAnswerId, List<StackTrace> stacktraces) {
+    public Question(String id, String acceptedAnswerId, String count, List<StackTrace> stacktraces) {
         this.id = id;
         this.url = "http://stackoverflow.com/questions/" + id;
         this.acceptedAnswerId = acceptedAnswerId;
 //        this.body = StringEscapeUtils.unescapeHtml(body);
+        this.answerCount = Integer.parseInt(count);
         this.stacktraces = stacktraces;
         this.reponses = new LinkedList<Reponse>();
     }
 
+    public boolean full() {
+        return answerCount == (reponses.size()+(acceptedAnswer==null?0:1));
+    }
+
+    
     public void setAcceptedAnswer(Reponse acceptedAnswer) {
         this.acceptedAnswer = acceptedAnswer;
     }

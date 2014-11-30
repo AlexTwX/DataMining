@@ -25,7 +25,7 @@ public class Main {
 
         //Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         try {
-            //parser.createPythonDataSet(DatasetFile);
+            //parser.createPythonDataSet(StacktrackDataset);
             //parser.createQuestionStacktraceDataset(QuestionStacktrackDataset);
             parser.createQuestionWithoutStacktraceDataset(QuestionWithoutStacktracDataset);
         } catch (XMLStreamException ex) {
