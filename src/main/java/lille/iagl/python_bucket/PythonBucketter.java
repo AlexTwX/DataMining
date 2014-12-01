@@ -11,6 +11,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -203,8 +206,57 @@ public class PythonBucketter {
             }
 
         }
+        
+        this.makeStats(this._posts);
 
+    }
 
+    private void makeStats(Map<String, List<Post>> posts) {
+    
+        // Top 10
+        List<List<Post>> sorted = new ArrayList<>();
+        for (Entry<String, List<Post>> e : this._posts.entrySet()) {
+            sorted.add(((List<Post>)e.getValue()));
+        }
+        
+        Collections.sort(sorted, new Comparator<List<Post>>(){
+
+            @Override
+            public int compare(List<Post> t, List<Post> t1) {
+                int size1, size2;
+                size1 = t.size();
+                size2 = t1.size();
+                 return (size1 < size2) ? 1: (size1 > size2) ? -1:0 ;
+            }
+            
+        });
+        
+        for(List<Post> p : sorted){
+            System.out.println( p.get(0).getStacktraces().get(0).getType() +" " + p.size());
+        }
+        
+//        // Top 10
+//        List<Post> sorted = new ArrayList<>();
+//        for (Entry<String, List<Post>> e : this._posts.entrySet()) {
+//            sorted.add(((List<Post>)e.getValue()).get(0));
+//        }
+//        
+//        Collections.sort(sorted, new Comparator<Post>(){
+//
+//            @Override
+//            public int compare(Post t, Post t1) {
+//                int size1, size2;
+//                size1 = t.getStacktraces().size();
+//                size2 = t1.getStacktraces().size();
+//                 return (size1 < size2) ? -1: (size1 > size2) ? 1:0 ;
+//            }
+//            
+//        });
+//        
+//        for(Post p : sorted){
+//            System.out.println("size " + p.getStacktraces().size());
+//        }
+        
     }
 
 }
