@@ -9,7 +9,7 @@
 \contentsline {section}{\numberline {3}Exploitation des datasets}{3}{section.3}
 \contentsline {subsection}{\numberline {3.1}Buckets, baseX, XPath}{4}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Stacktrace dataset}{6}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Question avec stacktrace}{6}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.3}Question avec stacktraces}{6}{subsection.3.3}
 \contentsline {subsection}{\numberline {3.4}Question sans stacktrace}{6}{subsection.3.4}
 \contentsline {section}{\numberline {4}Interpr\IeC {\'e}tation des donn\IeC {\'e}es}{6}{section.4}
 \contentsline {subsection}{\numberline {4.1}Stat CrashDataset}{6}{subsection.4.1}

@@ -8,7 +8,7 @@
 \BOOKMARK [1][-]{section.3}{Exploitation des datasets}{}% 8
 \BOOKMARK [2][-]{subsection.3.1}{Buckets, baseX, XPath}{section.3}% 9
 \BOOKMARK [2][-]{subsection.3.2}{Stacktrace dataset}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.3}{Question avec stacktrace}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.3}{Question avec stacktraces}{section.3}% 11
 \BOOKMARK [2][-]{subsection.3.4}{Question sans stacktrace}{section.3}% 12
 \BOOKMARK [1][-]{section.4}{Interpr\351tation des donn\351es}{}% 13
 \BOOKMARK [2][-]{subsection.4.1}{Stat CrashDataset}{section.4}% 14
