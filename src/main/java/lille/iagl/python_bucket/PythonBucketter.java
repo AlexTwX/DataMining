@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.stream.XMLEventReader;
@@ -29,6 +30,7 @@ import lille.iagl.entity.StackTrace;
 import lille.iagl.entity.Frame;
 import lille.iagl.pythonstacktracerecognizer.PythonStackTraceRecognizer;
 import lille.iagl.xmlcreator.XMLCreator;
+import org.apache.commons.lang.mutable.MutableInt;
 
 /**
  *
@@ -206,56 +208,58 @@ public class PythonBucketter {
             }
 
         }
-        
+
         this.makeStats(this._posts);
 
     }
 
     private void makeStats(Map<String, List<Post>> posts) {
-    
-        // Top 10
+
+        // Top 10 du plus grand nombre de posts
         List<List<Post>> sorted = new ArrayList<>();
         for (Entry<String, List<Post>> e : this._posts.entrySet()) {
-            sorted.add(((List<Post>)e.getValue()));
+            sorted.add(((List<Post>) e.getValue()));
         }
-        
-        Collections.sort(sorted, new Comparator<List<Post>>(){
+
+        Collections.sort(sorted, new Comparator<List<Post>>() {
 
             @Override
             public int compare(List<Post> t, List<Post> t1) {
                 int size1, size2;
                 size1 = t.size();
                 size2 = t1.size();
-                 return (size1 < size2) ? 1: (size1 > size2) ? -1:0 ;
+                return (size1 < size2) ? 1 : (size1 > size2) ? -1 : 0;
             }
-            
+
         });
-        
-        for(List<Post> p : sorted){
-            System.out.println( p.get(0).getStacktraces().get(0).getType() +" " + p.size());
+
+        for (List<Post> p : sorted) {
+            System.out.println(p.get(0).getStacktraces().get(0).getType() + " " + p.size());
+        }
+
+        // Taille des stacks
+        Map<Integer, MutableInt> stackSize = new HashMap<>();
+        Integer key;
+        List<Post> l_posts;
+
+        for (Entry<String, List<Post>> e : this._posts.entrySet()) {
+            l_posts = (List<Post>) e.getValue();
+            for (Post p : l_posts) {
+                for (StackTrace st : p.getStacktraces()) {
+                    key = st.getFrames().size();
+                    if (stackSize.get(key) == null) {
+                        stackSize.put(key, new MutableInt(0));
+                    }
+                    stackSize.get(key).increment();
+                }
+            }
         }
         
-//        // Top 10
-//        List<Post> sorted = new ArrayList<>();
-//        for (Entry<String, List<Post>> e : this._posts.entrySet()) {
-//            sorted.add(((List<Post>)e.getValue()).get(0));
-//        }
-//        
-//        Collections.sort(sorted, new Comparator<Post>(){
-//
-//            @Override
-//            public int compare(Post t, Post t1) {
-//                int size1, size2;
-//                size1 = t.getStacktraces().size();
-//                size2 = t1.getStacktraces().size();
-//                 return (size1 < size2) ? -1: (size1 > size2) ? 1:0 ;
-//            }
-//            
-//        });
-//        
-//        for(Post p : sorted){
-//            System.out.println("size " + p.getStacktraces().size());
-//        }
+        Map<Integer,MutableInt> sortedEntry =  new TreeMap<>(stackSize) ;
+         System.out.println("Taille stacktrace => Nombre de stackTrace" );
+        for(Entry<Integer,MutableInt> entry : sortedEntry.entrySet() ){
+            System.out.println(entry.getKey() + "=>" + entry.getValue());
+        }
         
     }
 
