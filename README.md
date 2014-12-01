@@ -38,6 +38,27 @@ QuestionWithStacktraceDataset
 
 QuestionWithoutStacktraceDataset
 --------------------------------
+    #Nombre de questions
+        //Question
+        Resultat: 345217
+    #Nombre de questions contenant une reponse acceptée
+        //Question[AcceptedAnswer/Score]
+        Resultat: 215288
+    #Nombre de questions ne contenant pas de reponse acceptée mais ayant des reponse
+        //Question[not(AcceptedAnswer/Score) and Reponses//Score]
+        Resultat: 98154
+    #Nombre de questions ne contenant pas de reponse acceptée mais ayant des reponse avec un score positif
+        //Question[not(AcceptedAnswer/Score) and Reponses//Score > 0] 
+        Resultat: 62907
+    #Nombre de questions contenant une reponse acceptée mais ayant des reponse avec un score plus élevé
+        //Question[Reponses//Score  > AcceptedAnswer/Score]
+        Resultat: 29485
+    #Nombre de reponse contenant une stacktrace
+        //Question[Reponses//Stack]]
+        Resultat: 626
+    #Nombre de question ne contenant pas de reponse
+        //Question[not(Reponses/Reponse)]
+        Resultat: 131175
 
 Sommaire du rapport
 -------------------
