@@ -1,6 +1,127 @@
 \section{Développement}
+Pour réaliser cette analyse, le contenu des posts du site StackOverFlow (Posts.xml) a été utilisé. StackOverFlow est un site web pour les développeurs rencontrant divers problèmes afin de les exposer et ainsi trouver une aide extérieur. Ce fichier représente 30Go de donnée contenant l'ensemble des posts depuis la création du site jusqu'au début 2014.
+La librairie stAx (Streaming Api for XML) qui permet de traiter un document XML de façon simple en consommant peu de mémoire a été utilisé pour lire ce fichier.
+\begin{figure}
+\begin{lstlisting}
+<Posts
+	Id
+	PostTypeId (1=Question, 2=Answer)
+	AcceptedAnswerId (only present if PostTypeId is 1)
+	ParentID (only present if PostTypeId is 2)
+	Score
+	Body
+	Tags
+/>
+\end{lstlisting}
+\caption{Structure du fichier Posts.xml minimifié}
+\label{code:posts}
+\end{figure}
+
 \subsection{Reconnaissance de stacktrace python}
-\subsection{Stackoverflow datadump}
-\subsection{Parser crash dataset}
-\subsection{Parser question avec crash}
-\subsection{Parser question sans crash}
+Afin de récupérer les stacktraces python un parser a été créé. Pour savoir si une stacktrace est présente une expression régulière est utilisée.
+\begin{figure}
+\begin{lstlisting}
+(Traceback \(most recent call last\):)
+(\s+File\s+\"[^\"]+\",\s+line\s+\d+,\s+in[^\n]+\n[^\n]+\n)+
+\s*\w+:[^\n]+
+\end{lstlisting}
+\caption{Expression régulière reconnaissant les stacktraces Python}
+\label{code:regex}
+\end{figure}
+
+\subsection{Parseur de stacktraces}
+Le premier dataset crée est un dataset contenant seulement  des stacktraces pythons
+\begin{figure}[!h]
+\begin{center}
+\begin{algorithmic}
+\Function {parserStacktraceDataset}{}
+	\State List $Posts \gets read('Posts.xml')$
+	\ForAll{$post \gets Posts$}
+		\State List $Stacktraces \gets getStacktraces(post.body)$
+		\ForAll{$stacktrace \gets Stacktraces$}
+			\State{writer(stacktrace)}
+		\EndFor
+	\EndFor
+\EndFunction
+\end{algorithmic}
+\caption{Recherche des stackstraces python}
+\label{Recherche des stackstraces python}
+\end{center}
+\end{figure}
+
+\subsection{Parseur de questions contenant au moins une stacktrace}
+Le second dataset constitue toutes les questions contenant au moins une stacktraces dans celle-ci.
+\begin{figure}[!h]
+\begin{center}
+\begin{algorithmic}
+\Function {parserQuestionWithStacktraceDataset}{}
+	\State List $Posts \gets read('Posts.xml')$
+	\State List Questions
+	\ForAll{$post \gets Posts$}
+		\If{post.postTypeId is Question}
+			\State List $Stacktraces \gets getStacktraces(post.body)$
+			\If{Stacktraces is not empty}
+				\State question = new Question(post, Stacktraces)
+				\State $Questions \gets question$
+			\EndIf
+		\Else \If{post.postTypeId is Reponse}
+			\ForAll{$question \gets Questions$}
+				\If{question.idPost = post.idParent}
+					\State List $Stacktraces \gets getStacktraces(reponse.body)$
+					\State reponse = new Reponse(post, Stacktraces)
+					\If{question.AcceptedAnswerId = reponse.idPost}
+						\State $question.AcceptedAnswer \gets reponse$
+					\Else
+						\State $question.reponses \gets reponse$
+					\EndIf
+				\EndIf
+			\EndFor
+		\EndIf
+		\EndIf
+	\EndFor
+	\State writer(Questions)
+\EndFunction
+\end{algorithmic}
+\caption{Recherche des questions contenant une stackstraces python}
+\label{Recherche des questions contenant une stackstraces python}
+\end{center}
+\end{figure}
+
+\subsection{Parseur de questions ne contenant pas de stacktraces}
+Ce dernier dataset regroupe toutes les questions pythons sans stacktrace afin de d'avoir des données de comparaison avec le deuxieme dataset
+\begin{figure}[!h]
+\begin{center}
+\begin{algorithmic}
+\Function {parserQuestionWithoutStacktraceDataset}{}
+	\State List $Posts \gets read('Posts.xml')$
+	\State Map<Int,Question> Questions
+	\ForAll{$post \gets Posts$}
+		\If{post.postTypeId is Question AND post.Tags contains "python"}
+			\State List $Stacktraces \gets getStacktraces(post.body)$
+			\If{Stacktraces is empty}
+				\State question = new Question(post)
+				\State $Questions \gets <post.idPost><question>$
+			\EndIf
+		\Else \If{post.postTypeId is Reponse}
+			\State $tmp\gets Questions.get(post.parentId)$
+			\If{tmp exist}
+				\State List $Stacktraces \gets getStacktraces(reponse.body)$
+				\State reponse = new Reponse(post, Stacktraces)
+				\If{question.AcceptedAnswerId = reponse.idPost}
+					\State $question.AcceptedAnswer \gets reponse$
+				\Else
+					\State $question.reponses \gets reponse$
+				\EndIf
+			\EndIf
+		\EndIf
+		\EndIf
+	\EndFor
+	\State writer(Questions)
+\EndFunction
+\end{algorithmic}
+\caption{Recherche des questions ne contenant pas de stackstraces python}
+\label{Recherche des questions ne contenant pas de stackstraces python}
+\end{center}
+\end{figure}
+\subsection{Résumé}
+3 datasets sont donc disponible, la raison de la création de plusieur dataset par rapport à un seul est que la génération d'un dataset demande un temps de l'ordre de 25min à 1h, la creation d'un dataset plus important aurait donc été plus long, cette solution a été adapté afin de pouvoir exploiter un dataset pendant la création d'un autre.
