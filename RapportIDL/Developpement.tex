@@ -1,5 +1,5 @@
 \section{Développement}
-Pour réaliser cette analyse, le contenu des posts du site StackOverFlow (Posts.xml) a été utilisé. StackOverFlow est un site web pour les développeurs rencontrant divers problèmes afin de les exposer et ainsi trouver une aide extérieur. Ce fichier représente 30Go de données contenant l'ensemble des posts depuis la création du site jusqu'au début 2014.
+Pour réaliser cette analyse, le contenu des posts du site StackOverFlow (Posts.xml) a été utilisé. StackOverFlow est un site web pour les développeurs rencontrant divers problèmes afin de les exposer et ainsi trouver une aide extérieure. Ce fichier représente 30Go de données contenant l'ensemble des posts depuis la création du site jusqu'au début 2014.
 La librairie stAx (Streaming Api for XML) qui permet de traiter un document XML de façon simple en consommant peu de mémoire a été utilisé pour lire ce fichier.
 \begin{figure}
 \begin{lstlisting}
@@ -124,4 +124,4 @@ Ce dernier dataset regroupe toutes les questions pythons sans stacktrace afin de
 \end{center}
 \end{figure}
 \subsection{Résumé}
-3 datasets sont donc disponible, la raison de la création de plusieurs datasets par rapport à un seul est que la génération d'un dataset demande un temps de l'ordre de 25min à 1h, la creation d'un dataset plus important aurait donc été plus long, cette solution a été adapté afin de pouvoir exploiter un dataset pendant la création d'un autre.
+3 datasets sont donc disponible, la raison de la création de plusieurs datasets par rapport à un seul est que la génération d'un dataset demande un temps de l'ordre de 25min à 1h, la creation d'un dataset plus important aurait donc été plus long, cette solution a été adaptée afin de pouvoir exploiter un dataset pendant la création d'un autre.

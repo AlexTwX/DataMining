@@ -1,4 +1,50 @@
 \section{Interprétation des données}
-\subsection{Stat CrashDataset}
+\subsection{Analyse du dataset des crashs}
+ Lors de la création des buckets, il a été possible de récupéré une donnée importante concernant les stackstraces : l'erreur principale. Parmi les stackstraces récupérés, il y a eu 60 erreurs différentes. Vous trouverez ci-dessous le top 10 des erreurs les plus fréquentes. On peut constater que les trois premières erreurs sont majoritairement devant les autres erreurs (la troisiéme erreur est deux fois plus présente que la quatrième). Ce top 3 permet aussi de constater que les erreurs les plus fréquentes sont des erreurs de developpeurs python non expériementés. Ces erreurs sont des erreurs de cast, d'accés a des attributs null ou non existant (python est sensible a la casse) ou d'import incorrect. Il est donc possible d'en déduire que ce sont le plus souvent les débutants qui fournissent les stackstraces permettant à la communauté de pouvoir les aider.
+
+\begin{bchart}[step=10,max=110]
+\bcbar[label=TypeError]{101}
+\bcbar[label=ImportError]{87}
+\bcbar[label=AttributeError]{82}
+\bcbar[label=NameError]{44}
+\bcbar[label=ValueError]{35}
+\bcbar[label=IOError]{29}
+\bcbar[label=AssertionError]{26}
+\bcbar[label=UnicodeEncodeError]{18}
+\bcbar[label=UnboundLocalError]{16}
+\bcbar[label=KeyError]{15}
+\bcxlabel{Top 10 des erreurs les plus fréquentes}
+\end{bchart}
+
+Il a également été possible de récupéré le nombre de frames dans les différentes stackstraces. 
+ 
+\scalebox{0.7}{
+\begin{bchart}[step=20,max=200]
+\bcbar[label=1]{172}
+\bcbar[label=2]{142}
+\bcbar[label=3]{65}
+\bcbar[label=4]{66}
+\bcbar[label=5]{16}
+\bcbar[label=6]{12}
+\bcbar[label=7]{20}
+\bcbar[label=8]{12}
+\bcbar[label=9]{24}
+\bcbar[label=10]{6}
+\bcbar[label=11]{6}
+\bcbar[label=12]{6}
+\bcbar[label=13]{9}
+\bcbar[label=14]{5}
+\bcbar[label=15]{19}
+\bcbar[label=16]{1}
+\bcbar[label=17]{3}
+\bcbar[label=18]{1}
+\bcbar[label=27]{2}
+\bcbar[label=28]{2}
+\bcbar[label=36]{3}
+\bcxlabel{Nombre de stackstraces par rapport au nombre de frames}
+\end{bchart}}
+
+Ce graphique montre que la majorité des stackstraces possédent moins de 5 frames. Ceci peut venir du fait que plus le programme appel de fonctions et plus le programme appel les bibliothéques standard qui sont censé être stables. Il est également possible, en adéquation avec les données extraitent précedemment, que les programmes ne sont pas assez complexes. En effet, comme interprété précedement nous pouvont pensez que ce sont des débutant qui envoient le plus de stackstraces et par conséquent ce sont des programmes dont la compléxité est moindre.  
+
 \subsection{Stat Question avec crash}
 \subsection{Stat Question sans crash}
